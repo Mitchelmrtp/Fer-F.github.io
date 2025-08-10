@@ -1,5 +1,5 @@
 // Base URL para el backend
-export const BASE_URL = 'http://localhost:3003';
+export const BASE_URL = 'https://mitchelmrtp-20251-soft2-api2-h4hkdvccfhcte3h6.eastus2-01.azurewebsites.net';
 
 // Función helper para hacer requests con manejo de errores
 const makeRequest = async (url, options = {}) => {

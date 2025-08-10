@@ -67,13 +67,13 @@ export const AuthProvider = ({ children }) => {
         contrasena: credentials.password
       };
       
-      console.log('🔑 Intentando login con:', { email: credentials.email });
+      console.log('🔑 Intentando login...');
       
       const response = await authAPI.login(backendCredentials);
       
       if (response.success) {
         const { user: userData } = response.data;
-        console.log('✅ Login exitoso, datos del usuario:', userData);
+        console.log('✅ Login exitoso para:', userData.correo);
         
         // Generar un token básico para esta sesión (simulado)
         const sessionToken = `session_${userData.id}_${Date.now()}`;
@@ -83,8 +83,6 @@ export const AuthProvider = ({ children }) => {
         
         // Guardar tanto usuario como token
         saveAuthData(userData, sessionToken);
-        
-        console.log('✅ Login exitoso, usuario autenticado. El FlowHandler manejará la navegación.');
         
         return { success: true, user: userData };
       } else {
@@ -114,13 +112,13 @@ export const AuthProvider = ({ children }) => {
         tipo: userData.type || 'cliente'
       };
       
-      console.log('🔐 Registrando usuario:', { email: userData.email });
+      console.log('🔐 Registrando usuario...');
       
       const response = await authAPI.register(backendUserData);
       
       if (response.success) {
         const { user: newUser } = response.data;
-        console.log('✅ Registro exitoso:', newUser);
+        console.log('✅ Registro exitoso para:', newUser.correo);
         
         // Generar un token básico para esta sesión (simulado)
         const sessionToken = `session_${newUser.id}_${Date.now()}`;
@@ -130,8 +128,6 @@ export const AuthProvider = ({ children }) => {
         
         // Guardar tanto usuario como token
         saveAuthData(newUser, sessionToken);
-        
-        console.log('✅ Registro exitoso, usuario autenticado. El FlowHandler manejará la navegación.');
         
         return { success: true, user: newUser };
       } else {

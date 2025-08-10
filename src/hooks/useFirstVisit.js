@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { questionnaireAPI } from '../utils/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
@@ -7,6 +7,8 @@ export const useFirstVisit = () => {
   const [isFirstVisit, setIsFirstVisit] = useState(null); // null = checking, true = first visit, false = returning user
   const [hasCompletedQuestionnaire, setHasCompletedQuestionnaire] = useState(false);
   const [questionnaireCount, setQuestionnaireCount] = useState(0);
+  const prevUserIdRef = useRef();
+  const prevCountRef = useRef();
 
   useEffect(() => {
     const checkFirstVisit = async () => {
@@ -17,7 +19,11 @@ export const useFirstVisit = () => {
         
         // Si está autenticado, obtener el conteo real desde la base de datos
         if (isAuthenticated && user && user.id) {
-          console.log('🔍 Obteniendo conteo de cuestionarios para usuario:', user.id);
+          // Solo logear la primera vez o cuando cambia el usuario
+          if (!prevUserIdRef.current || prevUserIdRef.current !== user.id) {
+            console.log('🔍 Obteniendo conteo de cuestionarios para usuario:', user.id);
+            prevUserIdRef.current = user.id;
+          }
           
           try {
             const response = await questionnaireAPI.getCount(user.id);
@@ -26,20 +32,28 @@ export const useFirstVisit = () => {
               setQuestionnaireCount(count);
               setHasCompletedQuestionnaire(count > 0);
               
-              console.log('🔍 Conteo de cuestionarios obtenido desde BD:', count);
+              // Solo logear si el conteo cambió
+              if (prevCountRef.current !== count) {
+                console.log('🔍 Conteo de cuestionarios obtenido desde BD:', count);
+                prevCountRef.current = count;
+              }
               
-              // Sincronizar localStorage con la base de datos
+              // Sincronizar localStorage con la base de datos siempre
+              localStorage.setItem('fer_questionnaire_completed', count > 0 ? 'true' : 'false');
+              localStorage.setItem('fer_questionnaire_count', count.toString());
+              
               if (count > 0) {
-                localStorage.setItem('fer_questionnaire_completed', 'true');
-                localStorage.setItem('fer_questionnaire_count', count.toString());
+                localStorage.setItem('fer_has_visited', 'true');
+                setIsFirstVisit(false);
               }
             }
           } catch (error) {
             console.error('Error obteniendo conteo de cuestionarios:', error);
-            // Fallback a localStorage si falla la API
+            // Fallback a localStorage solo si falla la API completamente
             const localCount = parseInt(localStorage.getItem('fer_questionnaire_count') || '0');
+            const localCompleted = localStorage.getItem('fer_questionnaire_completed') === 'true';
             setQuestionnaireCount(localCount);
-            setHasCompletedQuestionnaire(localCount > 0);
+            setHasCompletedQuestionnaire(localCompleted);
           }
         } else {
           // Si no está autenticado, usar localStorage como fallback

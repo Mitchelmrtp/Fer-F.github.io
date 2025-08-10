@@ -21,23 +21,35 @@ const FlowHandler = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   const { isFirstVisit, hasCompletedQuestionnaire, questionnaireCount, markAsVisited } = useFirstVisit();
   const location = useLocation();
+  const prevStateRef = useRef();
   
   // Verificar si viene del cuestionario completado
   const searchParams = new URLSearchParams(location.search);
   const fromQuestionnaire = searchParams.get('fromQuestionnaire') === 'true';
   
-  // Debug logs
-  console.log('🔍 FlowHandler - Estado actual:', {
-    isAuthenticated,
-    loading,
-    isFirstVisit,
-    hasCompletedQuestionnaire,
-    questionnaireCount,
-    currentPath: location.pathname,
-    fromQuestionnaire
-  });
-  
-  // No interferir con rutas específicas
+  // Debug del estado del FlowHandler (solo cuando hay cambios significativos)
+  useEffect(() => {
+    const currentState = {
+      isAuthenticated,
+      loading,
+      isFirstVisit,
+      hasCompletedQuestionnaire,
+      questionnaireCount,
+      location: location.pathname
+    };
+    
+    // Solo logear si hay cambios en autenticación o cuestionario
+    if (
+      prevStateRef.current?.isAuthenticated !== isAuthenticated ||
+      prevStateRef.current?.hasCompletedQuestionnaire !== hasCompletedQuestionnaire ||
+      prevStateRef.current?.questionnaireCount !== questionnaireCount ||
+      prevStateRef.current?.loading !== loading
+    ) {
+      console.log('🔍 FlowHandler - Estado actual:', currentState);
+    }
+    
+    prevStateRef.current = currentState;
+  }, [isAuthenticated, loading, isFirstVisit, hasCompletedQuestionnaire, questionnaireCount, location.pathname]);  // No interferir con rutas específicas
   if (location.pathname.includes('/questionnaire') || 
       location.pathname.includes('/login') || 
       location.pathname.includes('/registro') ||
@@ -287,7 +299,7 @@ function App() {
       const startMusicOnInteraction = async (event) => {
         console.log('👆 Interacción detectada:', event.type);
         try {
-          if (audioRef.current) {
+          if (audioRef.current && !musicPlaying) {
             await audioRef.current.play();
             setMusicPlaying(true);
             console.log('🎵 Música iniciada después de interacción del usuario');
@@ -296,7 +308,8 @@ function App() {
             removeInteractionListeners();
           }
         } catch (err) {
-          console.error('❌ No se pudo iniciar la música:', err);
+          // Silenciar este error ya que es normal
+          console.log('🔇 Audio aún no disponible, esperando...');
         }
       };
       
@@ -304,14 +317,12 @@ function App() {
         document.removeEventListener('click', startMusicOnInteraction);
         document.removeEventListener('touchstart', startMusicOnInteraction);
         document.removeEventListener('keydown', startMusicOnInteraction);
-        document.removeEventListener('scroll', startMusicOnInteraction);
       };
       
-      // Agregar múltiples tipos de listeners
+      // Agregar listeners más específicos (sin scroll para evitar spam)
       document.addEventListener('click', startMusicOnInteraction, { once: true });
       document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
       document.addEventListener('keydown', startMusicOnInteraction, { once: true });
-      document.addEventListener('scroll', startMusicOnInteraction, { once: true });
     }
   };
 

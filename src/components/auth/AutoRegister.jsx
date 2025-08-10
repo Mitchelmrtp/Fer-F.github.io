@@ -25,7 +25,7 @@ export default function AutoRegister() {
 
     try {
       // Intentar login primero (por si ya está registrado)
-      console.log('🔐 Intentando login directo primero...');
+      console.log('🔐 Verificando usuario existente...');
       try {
         const loginResult = await login({
           email: userData.email,
@@ -33,21 +33,19 @@ export default function AutoRegister() {
         });
         
         if (loginResult.success) {
-          console.log('✅ Login directo exitoso (usuario ya existía)');
+          console.log('✅ Usuario existente - Login exitoso');
           setStage('success');
           setTimeout(() => {
-            console.log('� Login exitoso, dejando que FlowHandler maneje la navegación');
-            // No navegar directamente, dejar que FlowHandler decida basado en questionnaireCount
             navigate('/');
           }, 1500);
           return;
         }
       } catch (loginError) {
-        console.log('ℹ️ Login directo falló, procediendo con registro...');
+        // Es normal que falle si el usuario no existe
       }
 
       // Si el login falla, intentar registro
-      console.log('📝 Iniciando registro automático...');
+      console.log('📝 Creando nuevo usuario...');
       const registerResult = await register(userData);
       
       if (registerResult.success) {

@@ -9,6 +9,9 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://sandbox-checkout.izipay.pe/payments/v1/js/index.js"></script>
+    <script 
+      src="https://sandbox-checkout.izipay.pe/payments/v1/js/index.js"
+      onerror="console.log('⚠️ Izipay SDK no disponible - modo sin pagos')"
+    ></script>
   </body>
 </html>
