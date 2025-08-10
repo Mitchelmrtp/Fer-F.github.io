@@ -66,7 +66,7 @@ export default function QuestionnaireResponses() {
       
       console.log('Haciendo petición con userId:', user.id);
       
-      const response = await axios.get(`http://localhost:3003/questionnaire/admin/all?userId=${user.id}`, {
+      const response = await axios.get(`https://mitchelmrtp-20251-soft2-api2-h4hkdvccfhcte3h6.eastus2-01.azurewebsites.net/questionnaire/admin/all?userId=${user.id}`, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -98,7 +98,7 @@ export default function QuestionnaireResponses() {
         return;
       }
       
-      const response = await axios.delete(`http://localhost:3003/questionnaire/admin/${id}?userId=${user.id}`, {
+      const response = await axios.delete(`https://mitchelmrtp-20251-soft2-api2-h4hkdvccfhcte3h6.eastus2-01.azurewebsites.net/questionnaire/admin/${id}?userId=${user.id}`, {
         headers: {
           'Content-Type': 'application/json'
         }

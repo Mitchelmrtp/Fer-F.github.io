@@ -20,7 +20,7 @@ window.debugQuestionnaireState = function() {
       const user = JSON.parse(atob(token.split('.')[1]));
       console.log('👤 Usuario decodificado:', user);
       
-      fetch(`http://localhost:3003/questionnaire/user/${user.id}/count`)
+      fetch(`https://mitchelmrtp-20251-soft2-api2-h4hkdvccfhcte3h6.eastus2-01.azurewebsites.net/questionnaire/user/${user.id}/count`)
         .then(response => response.json())
         .then(data => {
           console.log('🔢 Conteo desde API:', data);

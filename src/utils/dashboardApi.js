@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3003';
+const API_URL = 'https://mitchelmrtp-20251-soft2-api2-h4hkdvccfhcte3h6.eastus2-01.azurewebsites.net';
 
 // Crear instancia de axios con configuración base
 const api = axios.create({
