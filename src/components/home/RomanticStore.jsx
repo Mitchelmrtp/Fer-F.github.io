@@ -96,7 +96,7 @@ export default function RomanticStore() {
           <Heart className="w-4 h-4 absolute -top-1 -right-1 text-red-300 animate-pulse" />
         </div>
         <span className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          💕 Cuestionario para ti
+          💕
         </span>
       </button>
 
@@ -112,13 +112,12 @@ export default function RomanticStore() {
       >
         <RotateCcw className="w-5 h-5" />
         <span className="absolute bottom-full left-0 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          🔄 Reset para primera visita
+          🔄
         </span>
       </button>
 
       {/* Texto flotante adicional para debugging */}
       <div className="fixed bottom-20 right-6 bg-pink-100 text-pink-800 px-3 py-1 rounded-lg text-sm shadow-lg z-40 animate-pulse">
-        👆 Cuestionario aquí
       </div>
     </div>
   )
