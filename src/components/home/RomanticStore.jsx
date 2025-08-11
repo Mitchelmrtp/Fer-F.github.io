@@ -100,21 +100,7 @@ export default function RomanticStore() {
         </span>
       </button>
 
-      {/* Botón de reset para desarrollo (solo en desarrollo) */}
-      <button
-        onClick={() => {
-          console.log('🔄 Reseteando estado de primera visita...');
-          resetFirstVisit();
-          window.location.reload();
-        }}
-        className="fixed bottom-6 left-6 bg-red-600 hover:bg-red-700 text-white p-3 rounded-full shadow-xl transition-all duration-300 z-50 group"
-        title="Reset Flujo - Simular Primera Visita"
-      >
-        <RotateCcw className="w-5 h-5" />
-        <span className="absolute bottom-full left-0 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          🔄
-        </span>
-      </button>
+  
 
       {/* Texto flotante adicional para debugging */}
       <div className="fixed bottom-20 right-6 bg-pink-100 text-pink-800 px-3 py-1 rounded-lg text-sm shadow-lg z-40 animate-pulse">
