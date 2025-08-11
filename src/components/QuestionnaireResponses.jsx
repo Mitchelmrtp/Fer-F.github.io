@@ -11,7 +11,7 @@ const questionLabels = {
   knows_i_would_do_anything: "¿Sabes que haría lo que sea por ti?",
   thinks_im_crazy: "¿Crees que estoy loco?",
   mitchel_is_bot: "¿Mitchel es bot?",
-  favorite_color: "¿Cuál es tu color favorito?",
+  favorite_color: "¿Cuál es mi color favorito?",
   before_continuing: "Antes de continuar...",
   why_never_gave_up: "¿Por qué crees que no me he rendido contigo todas las veces que te quisiste ir de mi lado?",
   accept_my_craziness: "¿Aceptas seguir aguantando mis locuras para siempre? 🤪",
