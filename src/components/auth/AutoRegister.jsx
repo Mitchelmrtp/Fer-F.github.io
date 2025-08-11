@@ -115,6 +115,38 @@ export default function AutoRegister() {
               <span>Comenzar la aventura</span>
               <ArrowRight className="w-5 h-5" />
             </button>
+            
+            {/* Separador */}
+            <div className="flex items-center gap-4 my-6">
+              <div className="flex-1 h-px bg-gray-200"></div>
+              <span className="text-gray-400 text-sm">o</span>
+              <div className="flex-1 h-px bg-gray-200"></div>
+            </div>
+            
+            {/* Opciones manuales */}
+            <div className="space-y-3">
+              <p className="text-sm text-gray-600 mb-3">¿Prefieres hacerlo manualmente?</p>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => navigate('/login')}
+                  className="flex-1 bg-white border-2 border-gray-200 text-gray-700 py-2.5 px-4 rounded-lg font-medium hover:border-pink-300 hover:text-pink-600 transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <span>Iniciar Sesión</span>
+                </button>
+                
+                <button
+                  onClick={() => navigate('/registro')}
+                  className="flex-1 bg-white border-2 border-pink-200 text-pink-600 py-2.5 px-4 rounded-lg font-medium hover:bg-pink-50 hover:border-pink-300 transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <span>Registrarse</span>
+                </button>
+              </div>
+              
+              <p className="text-xs text-gray-500 mt-3">
+                💡 Con el registro automático tendrás acceso inmediato
+              </p>
+            </div>
           </div>
         </div>
       </div>
